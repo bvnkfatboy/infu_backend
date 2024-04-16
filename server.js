@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import http from "http";
 
 import authRoute from './routes/auth.route.js';
-
+import resetpasswordRoute from "./routes/resetpassword.route.js";
 // เรียกใช้ dotenv
 import 'dotenv/config'
 // กําหนดตัวแปร corsOption ที่ใช้ในการจัดการ CORS
@@ -24,7 +24,7 @@ app.use(cookieParser()); // เป็น middleware ที่ใช้ในก�
 
 
 app.use("/api/auth", authRoute);
-
+app.use("/api/reset-password", resetpasswordRoute);
 
 
 // สร้าง Server 
