@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../prisma/generated/client"
 }
 
 datasource db {
@@ -23,8 +22,8 @@ model User {
   provider Provider @default(Mail)
   profile Profile @map("profile")
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  facebookId String?
+  updatedAt DateTime?
+  socialId String?
 }
 
 type Profile {
@@ -34,12 +33,12 @@ type Profile {
   first_name String?
   last_name String?
   nickname String?
-  date_of_birth DateTime? @default(now())
+  date_of_birth DateTime?
   weight String?
   height String?
   gender String?
   lgbt String?
-  companytype CompanyType? @default(Company)
+  companytype CompanyType?
   // user   User   @relation(fields: [userId], references: [id])
   // userId String @unique @db.ObjectId
 }
@@ -72,7 +71,7 @@ enum CompanyType {
 
 enum Provider {
   Facebook
-  Tiktok
-  Instagram
+  Google
+  Line
   Mail
 }

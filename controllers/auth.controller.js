@@ -20,7 +20,6 @@ export const register = async (req, res) => {
                         first_name,
                         last_name,
                         nickname,
-                        // date_of_birth,
                         weight,
                         height,
                         lgbt,
