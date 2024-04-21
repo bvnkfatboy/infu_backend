@@ -11,10 +11,8 @@ export const socialSignup = async ({ body: { socialId, nickname, email, img_prof
         email,
         password: hashedPassword,
         profile: {
-          create: {
             nickname,
             img_profile
-          }
         },
         provider,
         socialId
