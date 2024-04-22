@@ -7,6 +7,11 @@ import http from "http";
 import authRoute from './routes/auth.route.js';
 import resetpasswordRoute from "./routes/resetpassword.route.js";
 import socialRoute from "./routes/social.route.js";
+
+// const {initChat} = require('./controllers/chat.controller.js');
+
+import { initChat } from "./controllers/chat.controller.js";
+
 // เรียกใช้ dotenv
 import 'dotenv/config'
 // กําหนดตัวแปร corsOption ที่ใช้ในการจัดการ CORS
@@ -34,3 +39,5 @@ const PORT = process.env.PORT || 8000;
 Server.listen(PORT, () =>
     console.log(`Server running on port ${PORT}`)
 );
+
+initChat(Server);

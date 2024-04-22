@@ -18,22 +18,8 @@ export const socialSignup = async ({ body: { socialId, nickname, email, img_prof
         socialId
       }
     });
-
-    const token = jwt.sign(
-      { id: newUser.id, isAdmin: false },
-      process.env.JWT_SECRET_KEY,
-      { expiresIn: age }
-    );
-
-    const { password, ...userInfo } = newUser;
-
-    res
-      .cookie("token", token, {
-        httpOnly: true,
-        maxAge: age
-      })
-      .status(201)
-      .json(userInfo);
+        console.log(newUser);
+        res.status(201).json(newUser);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to signup!" });
@@ -68,6 +54,20 @@ export const socialDelete = async ({ body: { socialId } }, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to delete!" });
+  }
+};
+
+export const findSocialUserID = async ({ body: { email } }, res) => {
+  try {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (user) {
+      res.status(200).json({ userId: user.id });
+    } else {
+      res.status(204).json({ message: "User not found!" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to find user!" });
   }
 };
 
