@@ -2,7 +2,10 @@ import prisma from "../lib/prisma.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-export const socialSignup = async ({ body: { socialId, nickname, email, img_profile, provider } }, res) => {
+export const socialSignup = async (
+  { body: { socialId, name, email, image, provider } },
+  res
+) => {
   const age = 1000 * 60 * 60 * 24 * 7;
   try {
     const hashedPassword = await bcrypt.hash(socialId, 10);
@@ -10,16 +13,14 @@ export const socialSignup = async ({ body: { socialId, nickname, email, img_prof
       data: {
         email,
         password: hashedPassword,
-        profile: {
-            nickname,
-            img_profile
-        },
+        name,
+        image,
         provider,
-        socialId
-      }
+        socialId,
+      },
     });
-        console.log(newUser);
-        res.status(201).json(newUser);
+    console.log(newUser);
+    res.status(201).json(newUser);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to signup!" });
@@ -39,12 +40,12 @@ export const socialDelete = async ({ body: { socialId } }, res) => {
   try {
     const user = await prisma.user.findUnique({
       where: { socialId },
-      select: { id: true }
+      select: { id: true },
     });
 
     if (user) {
       await prisma.user.delete({
-        where: { id: user.id }
+        where: { id: user.id },
       });
 
       res.status(200).json({ message: "Delete successfully!" });
@@ -70,4 +71,3 @@ export const findSocialUserID = async ({ body: { email } }, res) => {
     res.status(500).json({ message: "Failed to find user!" });
   }
 };
-

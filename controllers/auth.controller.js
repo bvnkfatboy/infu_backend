@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { json } from "express";
 
 export const register = async (req, res) => {
-  const { email, password, name, weight, height, lgbt } = req.body;
+  const { email, password, name } = req.body;
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     //db operation
@@ -14,16 +14,6 @@ export const register = async (req, res) => {
         email,
         password: hashedPassword,
         name,
-        // profile: {
-
-        //         first_name,
-        //         last_name,
-        //         nickname,
-        //         weight,
-        //         height,
-        //         lgbt,
-
-        // }
       },
     });
 
@@ -37,7 +27,6 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
-
   try {
     const user = await prisma.user.findUnique({
       where: { email },
@@ -54,7 +43,6 @@ export const login = async (req, res) => {
     }
 
     const { password: userPassword, ...userInfo } = user;
-
     res.status(200).json(user);
   } catch (err) {
     console.log(err);
