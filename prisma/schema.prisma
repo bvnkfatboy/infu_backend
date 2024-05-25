@@ -26,11 +26,15 @@ model User {
 
 type Profile {
   bio    String? @default("")
+  nickname String? @default("")
+  profilename String? @default("")
   birthday DateTime? 
   weight String? @default("")
   height String? @default("")
   gender String? @default("")
-  lgbt String? @default("")
+  age String? @default("")
+  nation String? @default("")
+  telephone String? @default("")
   companytype CompanyType?
 }
 
